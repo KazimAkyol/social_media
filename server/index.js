@@ -41,29 +41,15 @@ const upload = multer({ storage });
 
 
 /* MONGOOSE SETUP */
-// const PORT = process.env.PORT || 6001;
-// mongoose.connect(process.env.MONGO_URL)
-//     .then(() => {
-//         app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+const PORT = process.env.PORT || 6001;
+mongoose.connect(process.env.MONGO_URL)
+    .then(() => {
+        app.listen(PORT, () => console.log(`Connected, Server Port: ${PORT}`));
 
-//         /* ADD DATA ONE TIME */
-//         // User.insertMany(users);
-//         // Post.insertMany(posts);
-//     })
-//     .catch((error) => console.log(`${error} did not connect`));
-
-const connectDB = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URL, {
-            serverSelectionTimeoutMS: 5000, // 5 saniye timeout
-        });
-        console.log('✅ MongoDB bağlantısı başarılı');
-    } catch (error) {
-        console.error('❌ MongoDB bağlantı hatası:', error.message);
-        process.exit(1); // Uygulamayı sonlandır
-    }
-};
-
-connectDB();
+        /* ADD DATA ONE TIME */
+        // User.insertMany(users);
+        // Post.insertMany(posts);
+    })
+    .catch((error) => console.log(`${error} did not connect`));
 
 // 20:25
