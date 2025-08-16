@@ -53,5 +53,3 @@ mongoose.connect(process.env.MONGO_URL)
         // Post.insertMany(posts);
     })
     .catch((error) => console.log(`${error} did not connect`));
-
-// 20:25
