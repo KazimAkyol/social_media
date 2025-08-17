@@ -8,8 +8,7 @@ import AdvertWidget from "scenes/widgets/AdvertWidgest";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 
 const HomePage = () => {
-
-    // 01:50:26
+    
   return (
     <Box>
 
