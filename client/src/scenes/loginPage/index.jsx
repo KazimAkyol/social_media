@@ -34,7 +34,7 @@ const LoginPage = () => {
                     variant="h5"
                     sx={{ mb: "1.5rem" }}
                 >
-                    Welcome to join-J, the Social Media for join-J!
+                    Welcome to join-J, the Social Media for Sociapaths!
                 </Typography>
                 <Form />
             </Box>
