@@ -13,7 +13,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "state";
-import Dropzone from "react-dropzone/.";
+import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 
 const registerSchema = yup.object().shape({
@@ -51,12 +51,12 @@ const Form = () => {
     const { palette } = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const isNonMobile = useMediaQuery("(min-width: 600px");
+    const isNonMobile = useMediaQuery("(min-width: 600px)");
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
 
     const register = async (values, onSubmitProps) => {
-        // this allows us to send the form data to the server
+        // this allows us to send the form info with image
         const formData = new FormData();
         for (let value in values) {
             formData.append(value, values[value]);
@@ -79,7 +79,8 @@ const Form = () => {
     };
 
     const login = async (values, onSubmitProps) => {
-        const loggedInResponse = await fetch("http://localhost:3001/auth/login",
+        const loggedInResponse = await fetch(
+            "http://localhost:3001/auth/login",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -99,7 +100,7 @@ const Form = () => {
         }
     };
 
-    const handleFormSubmit = async (validateYupSchema, onSubmitProps) => {
+    const handleFormSubmit = async (values, onSubmitProps) => {
         if (isLogin) await login(values, onSubmitProps);
         if (isRegister) await register(values, onSubmitProps);
     };
@@ -137,7 +138,9 @@ const Form = () => {
                                     onChange={handleChange}
                                     value={values.firstName}
                                     name="firstName"
-                                    error={Boolean(touched.firstName) && Boolean(errors.firstName)}
+                                    error={
+                                        Boolean(touched.firstName) && Boolean(errors.firstName)
+                                    }
                                     helperText={touched.firstName && errors.firstName}
                                     sx={{ gridColumn: "span 2" }}
                                 />
@@ -147,7 +150,9 @@ const Form = () => {
                                     onChange={handleChange}
                                     value={values.lastName}
                                     name="lastName"
-                                    error={Boolean(touched.lastName) && Boolean(errors.lastName)}
+                                    error={
+                                        Boolean(touched.lastName) && Boolean(errors.lastName)
+                                    }
                                     helperText={touched.lastName && errors.lastName}
                                     sx={{ gridColumn: "span 2" }}
                                 />
@@ -157,19 +162,23 @@ const Form = () => {
                                     onChange={handleChange}
                                     value={values.location}
                                     name="location"
-                                    error={Boolean(touched.location) && Boolean(errors.location)}
+                                    error={
+                                        Boolean(touched.location) && Boolean(errors.location)
+                                    }
                                     helperText={touched.location && errors.location}
-                                    sx={{ gridColumn: "span 2" }}
+                                    sx={{ gridColumn: "span 4" }}
                                 />
                                 <TextField
                                     label="Occupation"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value={values.occupation}
-                                    name="location"
-                                    error={Boolean(touched.occupation) && Boolean(errors.occupation)}
+                                    name="occupation"
+                                    error={
+                                        Boolean(touched.occupation) && Boolean(errors.occupation)
+                                    }
                                     helperText={touched.occupation && errors.occupation}
-                                    sx={{ gridColumn: "span 2" }}
+                                    sx={{ gridColumn: "span 4" }}
                                 />
                                 <Box
                                     gridColumn="span 4"
@@ -178,9 +187,10 @@ const Form = () => {
                                     p="1rem"
                                 >
                                     <Dropzone
-                                        acceptedFiles=".jpg, .jpeg, .png"
+                                        acceptedFiles=".jpg,.jpeg,.png"
                                         multiple={false}
-                                        onDrop={(acceptedFiles) => setFieldValue("picture", acceptedFiles[0])
+                                        onDrop={(acceptedFiles) =>
+                                            setFieldValue("picture", acceptedFiles[0])
                                         }
                                     >
                                         {({ getRootProps, getInputProps }) => (
@@ -223,7 +233,7 @@ const Form = () => {
                             type="password"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.email}
+                            value={values.password}
                             name="password"
                             error={Boolean(touched.password) && Boolean(errors.password)}
                             helperText={touched.password && errors.password}
