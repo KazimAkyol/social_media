@@ -53,43 +53,36 @@ export const addRemoveFriend = async (req, res) => {
         const user = await User.findById(id);
         const friend = await User.findById(friendId);
 
+        if (!user || !friend) {
+            return res.status(404).json({ message: "User or friend not found" });
+        }
+
+        // DÜZELTME: friend.friends.filter'deki hata
         if (user.friends.includes(friendId)) {
-            user.friends = user.friends.filter((id) => id !== friendId);
-            friend.friends = friend.friends.filter((id) => id !== id);
+            // Arkadaşı çıkar
+            user.friends = user.friends.filter(fId => fId.toString() !== friendId);
+            friend.friends = friend.friends.filter(fId => fId.toString() !== id);
         } else {
+            // Arkadaş ekle
             user.friends.push(friendId);
             friend.friends.push(id);
         }
+
         await user.save();
         await friend.save();
 
+        // Güncellenmiş arkadaş listesini getir
+        const updatedUser = await User.findById(id);
         const friends = await Promise.all(
-            user.friends.map((id) => User.findById(id))
+            updatedUser.friends.map((friendId) => User.findById(friendId))
         );
 
-        const formattedFriends = friends.map((
-            {
-                _id,
-                firstName,
-                lastName,
-                occupation,
-                location,
-                picturePath
-            }
-        ) => {
-            return {
-                _id,
-                firstName,
-                lastName,
-                occupation,
-                location,
-                picturePath
-            };
-        }
-        );
+        const formattedFriends = friends.map(({ _id, firstName, lastName, occupation, location, picturePath }) => {
+            return { _id, firstName, lastName, occupation, location, picturePath };
+        });
 
         res.status(200).json(formattedFriends);
     } catch (err) {
-        res.status(404).json({ message: err.message });
+        res.status(500).json({ message: err.message });
     }
 }
