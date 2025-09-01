@@ -89,7 +89,8 @@ const UserWidget = ({ userId, picturePath }) => {
                     display="flex"
                     alignItems="center"
                     gap="1rem"
-                    mb="0.5rem">
+                    mb="0.5rem"
+                >
                     <LocationOnOutlined fontSize="large" sx={{ color: main }} />
                     <Typography color={medium}>
                         {location}
